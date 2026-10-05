@@ -1,0 +1,74 @@
+name: slides-canary-build
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'tsconfig.json'
+      - 'open-slide.config.ts'
+      - 'slides/**'
+      - 'docs/SLIDES_CANARY_QA_CHECKLIST.md'
+      - '.github/workflows/slides-canary-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: slides-canary-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build open-slide deck
+        run: npm run build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: masi-os-open-slide-canary-dist
+          path: dist
+
+      - name: Compose additive Pages site
+        if: github.event_name == 'pull_request' && github.head_ref == 'slides-capability-canary-20261005'
+        run: |
+          mkdir -p site/canary
+          cp index.html site/index.html
+          cp .nojekyll site/.nojekyll
+          cp -R dist/. site/canary/
+
+      - name: Upload Pages artifact
+        if: github.event_name == 'pull_request' && github.head_ref == 'slides-capability-canary-20261005'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    if: github.event_name == 'pull_request' && github.head_ref == 'slides-capability-canary-20261005'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy additive canary to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

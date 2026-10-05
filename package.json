@@ -1,0 +1,25 @@
+{
+  "name": "masi-os-playbook-slides-canary",
+  "private": true,
+  "version": "0.1.0-canary.20261005",
+  "type": "module",
+  "scripts": {
+    "dev": "open-slide dev",
+    "build": "open-slide build",
+    "preview": "open-slide preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@open-slide/core": "2.0.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
