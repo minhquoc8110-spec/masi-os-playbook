@@ -15,10 +15,11 @@
 - `docs/SLIDES_CANARY_QA_CHECKLIST.md` — QA gate.
 - `docs/SLIDES_CAPABILITY_CANARY_20261005.md` — updated control record.
 - `README.md` — canary run instructions.
+- PR comment records the implementation checkpoint.
 
 ## Current head
 
-`67649881ddfec6de1f1ce230742a0faa29253efa`
+`6e115d84e361048d9e5ec17104a2a5d5b2445f49`
 
 ## Evidence status
 
