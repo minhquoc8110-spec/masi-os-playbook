@@ -6,12 +6,24 @@
 
 Masibio đã có một repo public `masi-os-playbook` với `index.html`, `.nojekyll`, `README.md`. Repo hiện là single-file interactive HTML, không phải open-slide/React source project. Đây là tài sản tốt để giữ làm baseline, nhưng chưa phải hệ thống presentation-as-a-web-product chuẩn hóa cho Masibio.
 
+## Trạng thái thực thi 80/20
+
+Đã chuyển từ planning-only sang implementation canary trong PR này:
+
+- Added pinned open-slide source package: `@open-slide/core@2.0.1`, React 19, TypeScript 7.
+- Added `open-slide.config.ts` with GitHub Pages project-site base `/masi-os-playbook/`.
+- Added `slides/masi-os-canary/index.tsx`, an 8-page MASI OS pilot deck with speaker notes.
+- Added `.github/workflows/slides-canary-build.yml` to run install, typecheck, build and upload `dist` artifact.
+- Added `docs/SLIDES_CANARY_QA_CHECKLIST.md` for build, web, design, export and evidence gates.
+
+Current state remains **not production standard** until CI/build/export/manual QA evidence is attached.
+
 ## Nguồn sự thật đã kiểm
 
 - GitHub repo: `minhquoc8110-spec/masi-os-playbook`
 - Visibility: public
 - Default branch: `main`
-- Current structure: `.nojekyll`, `README.md`, `index.html`
+- Current main structure before canary: `.nojekyll`, `README.md`, `index.html`
 - README hiện mô tả: 21 interactive screens, keyboard navigation, mobile responsive reading mode, single-file HTML, design QA, GitHub Pages.
 - Ảnh người dùng xác nhận `masibio.github.io` đang 404; vì vậy không lấy `masibio.github.io` làm URL chuẩn hiện tại.
 
@@ -34,9 +46,9 @@ Kết quả mong muốn:
 
 ## Stack canary
 
-- Engine candidate: `open-slide` v2.x, pin exact version bằng lockfile.
-- Repo pilot đề xuất: tạo repo nguồn riêng `masibio-slides` hoặc thư mục nguồn mới trong repo hiện tại, nhưng **không phá baseline single-file đang có**.
-- Public route giai đoạn 1: `https://minhquoc8110-spec.github.io/<repo-or-path>/`
+- Engine candidate: `open-slide` v2.x, pin exact version.
+- Repo pilot: same repo, source canary added without replacing existing `index.html` baseline.
+- Public route after merge/build decision: `https://minhquoc8110-spec.github.io/masi-os-playbook/`
 - Public route giai đoạn 2: `slides.masi.bio`
 
 ## Không làm ngay
@@ -51,25 +63,20 @@ Kết quả mong muốn:
 
 **Deck:** MASI OS — Corporate Brain & Execution Control Plane  
 **Ngôn ngữ:** tiếng Việt trước  
-**Độ dài:** 12–15 slide  
+**Độ dài:** 8 slide 80/20 trước, mở rộng 12–15 slide sau khi build/export PASS  
 **Audience:** đối tác đại học / nội bộ quản trị / nhà tài trợ  
 **Mục tiêu:** giải thích MASI OS như hệ điều hành vận hành doanh nghiệp, không phải bộ prompt hay tài liệu chết.
 
-## Slide outline v0
+## Slide outline v1 80/20
 
 1. Title — MASI OS
-2. Why now — từ công việc rời rạc sang operating truth
-3. Problem — chat, file, task, quyết định bị tách rời
-4. Doctrine — R1 Manual, R2 Automation, R3 AI
-5. Architecture — CEO → AI Control Tower → BA System → Forge → Runtime → Evidence
-6. Operating Truth — PostgreSQL / Notion / GitHub / Evidence
-7. Governance — authority, admission, QA, rollback
-8. Staff Ready — con người trước, AI sau
-9. Lead-to-Cash — case codification đầu tiên
-10. Website QA — public content must be tested
-11. Grants & Joint Lab — từ chiến lược đến năng lực pilot
-12. What changes — từ slide chết thành sản phẩm số có lifecycle
-13. Next step — canary, QA, standardization
+2. Problem — thiếu Operating Truth
+3. Doctrine — R1 Manual, R2 Automation, R3 AI
+4. Architecture — CEO → AI Control Tower → BA System → Forge → Runtime → Evidence
+5. Operating Truth — PostgreSQL / Notion / GitHub / Chat
+6. Governance Gate — Visual / Interaction / Export / Evidence QA
+7. Transformation — slide chết → sản phẩm số có lifecycle
+8. Next action — canary PASS thì chuẩn hóa
 
 ## QA gate
 
@@ -78,7 +85,7 @@ PASS khi có đủ bằng chứng:
 - Visual QA: logo, màu, typography, spacing, contrast, overflow.
 - Responsive QA: iPhone Safari, desktop 16:9, desktop narrow width.
 - Interaction QA: swipe/keyboard/menu/fullscreen/presenter.
-- Build QA: deterministic build, lockfile, no secret, no PII.
+- Build QA: deterministic build, pinned version, no secret, no PII.
 - Export QA: PDF usable; PPTX opens clean; notes preserved.
 - Deployment QA: route works; refresh deep links; no accidental 404.
 - Evidence: screenshots, exported PDF/PPTX, commit SHA, QA notes.
@@ -93,14 +100,14 @@ PASS khi có đủ bằng chứng:
 
 ### Phase 1 — Source canary
 
-- Scaffold open-slide pinned v2.x.
-- Create MASI Brand tokens and reusable slide primitives.
-- Build MASI OS 12–15 slide deck.
-- Add README with run/build/export commands.
+- Scaffold open-slide pinned v2.x. **DONE**
+- Create MASI Brand tokens and reusable slide primitives. **DONE 80/20**
+- Build MASI OS 8 slide deck. **DONE 80/20**
+- Add README/checklist with run/build/export commands. **DONE**
 
-### Phase 2 — Local/agent QA
+### Phase 2 — Build/agent QA
 
-- Run build.
+- Run GitHub Actions build.
 - Inspect output on desktop and mobile viewport.
 - Export PDF.
 - Export PPTX.
@@ -108,7 +115,7 @@ PASS khi có đủ bằng chứng:
 
 ### Phase 3 — GitHub Pages canary
 
-- Publish canary route.
+- Publish canary route only after Phase 2 passes.
 - Test public link.
 - Do not map `slides.masi.bio` until canary PASS.
 
@@ -117,7 +124,3 @@ PASS khi có đủ bằng chứng:
 - PASS: standardize into `Masibio Slides Capability v1.0`.
 - PASS_WITH_NOTES: keep pilot, patch defects.
 - FAIL: keep current single-file approach and reassess Slidev/Reveal/open-slide.
-
-## Immediate next action
-
-Create a PR from this branch as the control record. Implementation should start from this checklist, not from a TikTok demo or README claim.
