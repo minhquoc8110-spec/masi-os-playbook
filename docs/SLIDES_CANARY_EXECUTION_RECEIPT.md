@@ -19,12 +19,12 @@
 
 ## Current head
 
-`6e115d84e361048d9e5ec17104a2a5d5b2445f49`
+`648ded549c666758b5f46dcdd6d4857781811cae`
 
 ## Evidence status
 
 - Source scaffold: DONE.
-- CI build: PENDING GitHub Actions run.
+- CI build: PASS — GitHub Actions `slides-canary-build` completed successfully in 34s (run 37249033253).
 - Desktop/iPhone visual QA: PENDING.
 - PDF export: PENDING.
 - PPTX PowerPoint Mac test: PENDING.
