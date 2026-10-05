@@ -1,0 +1,8 @@
+{
+  "folders": [
+    { "id": "masibio", "name": "Masibio" }
+  ],
+  "assignments": {
+    "masi-os-canary": "masibio"
+  }
+}
